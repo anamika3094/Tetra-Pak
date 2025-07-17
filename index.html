@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mobile Service Request Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      padding: 20px;
+    }
+    form {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    .hidden {
+      display: none;
+    }
+    .checkbox-group, .radio-group {
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<form id="serviceForm">
+  <h2>Mobile Service Request Form</h2>
+
+  <label>Employee Name:</label>
+  <input type="text" required>
+
+  <label>Employee ID:</label>
+  <input type="text" required>
+
+  <label>Person ID:</label>
+  <input type="text" required>
+
+  <label>User ID:</label>
+  <input type="text" required>
+
+  <label>Date of Birth:</label>
+  <input type="date" required>
+
+  <label>Email ID:</label>
+  <input type="email" required>
+
+  <label>Alternate Number:</label>
+  <input type="tel" pattern="\d{10}" required>
+
+  <label>Aadhaar Number:</label>
+  <input type="text" pattern="\d{12}" maxlength="12" required>
+
+  <label>Address as per Aadhaar:</label>
+  <textarea rows="3" required></textarea>
+
+  <label>Pincode:</label>
+  <input type="text" pattern="\d{6}" maxlength="6" required>
+
+  <label>Upload Soft Copy of Aadhaar:</label>
+  <input type="file" accept=".pdf, image/*" required>
+
+  <label>Type of Request:</label>
+  <div class="radio-group">
+    <input type="radio" name="connectionType" id="new" value="new" onclick="toggleOptions()"> New Connection
+    <input type="radio" name="connectionType" id="porting" value="porting" onclick="toggleOptions()"> Porting
+  </div>
+
+  <!-- New Connection Options -->
+  <div id="newOptions" class="checkbox-group hidden">
+    <label>Choose Network:</label>
+    <input type="checkbox" name="network" value="Airtel"> Airtel
+    <input type="checkbox" name="network" value="VI"> VI
+    <input type="checkbox" name="network" value="Jio"> Jio
+  </div>
+
+  <!-- Porting Options -->
+  <div id="portOptions" class="checkbox-group hidden">
+    <label>Porting Type:</label>
+    <input type="checkbox" value="Personal to Corporate"> Personal ➝ Corporate
+    <input type="checkbox" value="Corporate to Personal"> Corporate ➝ Personal
+
+    <label>Port Code:</label>
+    <input type="text">
+
+    <label>Mobile Number:</label>
+    <input type="tel" pattern="\d{10}">
+
+    <label>Port Validity:</label>
+    <input type="date"> to <input type="date">
+  </div>
+
+  <button type="submit">Submit</button>
+  <button type="reset">Reset</button>
+  <button type="button" onclick="reviewForm()">Review</button>
+</form>
+
+<script>
+  function toggleOptions() {
+    const newOpt = document.getElementById("newOptions");
+    const portOpt = document.getElementById("portOptions");
+    const isNew = document.getElementById("new").checked;
+    const isPort = document.getElementById("porting").checked;
+
+    newOpt.classList.toggle("hidden", !isNew);
+    portOpt.classList.toggle("hidden", !isPort);
+  }
+
+  function reviewForm() {
+    alert("Please scroll and verify all details before submitting.");
+  }
+</script>
+
+</body>
+</html>
