@@ -45,3 +45,4 @@ RECEIVER_EMAIL=your-email@gmail.com
 node server.js
 Go to: http://localhost:3000
 
+<img width="1920" height="1027" alt="image" src="https://github.com/user-attachments/assets/be2f1758-9df9-4697-aa1a-0879855e00b4" />
