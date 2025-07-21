@@ -41,7 +41,6 @@ SMTP_USER=YOUR_BREVO_SMTP_USER
 SMTP_PASS=YOUR_BREVO_SMTP_PASSWORD
 RECEIVER_EMAIL=your-email@gmail.com
 
-
 # 5. Run the App
 node server.js
 Go to: http://localhost:3000
