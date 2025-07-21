@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mobile Connection Form</title>
+  <style>
+    /* Your CSS unchanged */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: white;
+      color: #333;
+      padding: 20px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+      flex-direction: column;
+    }
+    .header img {
+      height: 120px;
+      width: 120px;
+      margin-bottom: 10px;
+    }
+    .header h2 {
+      color: #333;
+      font-size: 30px;
+      text-align: center;
+    }
+    .main-content {
+      flex-grow: 1;
+      padding: 20px;
+    }
+    .form-container {
+      max-width: 900px;
+      margin: auto;
+      background: #f4f4f4;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    .form-group {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    .form-group label {
+      white-space: nowrap;
+      margin-right: 10px;
+      font-weight: 600;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input[type="file"] {
+      padding: 5px;
+    }
+    .radio-group {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .section {
+      margin-top: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .button-group button,
+    .review-update-group button {
+      flex: 1;
+      margin: 0 5px;
+      padding: 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+    }
+    button[type="submit"] { background-color: #0072C6; }
+    button[type="submit"]:hover { background-color: #005A9E; }
+    button[type="reset"] { background-color: #00A1E4; }
+    button[type="reset"]:hover { background-color: #0086BE; }
+    .review-update-group {
+      display: none;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+    .review-update-group button:first-child {
+      background-color: #28a745;
+    }
+    .review-update-group button:last-child {
+      background-color: #ffc107;
+    }
+    .dual-select {
+      display: flex;
+      gap: 20px;
+      flex: 1;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+    .dual-select .form-group {
+      flex: 1;
+    }
+    @media (max-width: 768px) {
+      .form-row {
+        flex-direction: column;
+      }
+      .dual-select {
+        flex-direction: column;
+      }
+    }
+    #confirmationDetails {
+      display: none;
+      background: #e7f5ff;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <!-- Removed broken image src and replaced with placeholder -->
+  <div style="width:120px; height:120px; background:#ddd; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#555; margin-bottom:10px;">
+    Logo
+  </div>
+  <h2>Mobile Connection Form</h2>
+</div>
+
+<div class="main-content">
+  <form id="mobileForm" class="form-container">
+    <!-- Your form unchanged -->
+    <div class="form-row">
+      <div class="form-group"><label>Employee Name:</label><input type="text" name="employeeName" required></div>
+      <div class="form-group"><label>Employee ID:</label><input type="text" name="employeeId" pattern="\d{8}" maxlength="8" required></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Person ID:</label><input type="text" name="personId" pattern="\d{8}" maxlength="8" required></div>
+      <div class="form-group"><label>User ID:</label><input type="text" name="userId" required></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Date of Birth:</label><input type="date" name="dob" required></div>
+      <div class="form-group"><label>Email ID:</label><input type="email" name="email" required></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Alternate Mobile Number:</label><input type="tel" name="alternateMobile" pattern="\d{10}" maxlength="10" required></div>
+      <div class="form-group"><label>Aadhaar Number:</label><input type="text" name="aadhaarNumber" pattern="\d{12}" maxlength="12" required></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Address:</label><textarea name="address" rows="3" required></textarea></div>
+      <div class="form-group"><label>Pincode:</label><input type="text" name="pincode" pattern="\d{6}" maxlength="6" required></div>
+    </div>
+
+    <div class="form-group" style="margin-bottom: 20px;">
+      <label>Upload Aadhaar Card:</label>
+      <input type="file" name="aadhaarUpload" accept=".pdf,image/*" required>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Type of Request:</label>
+        <label><input type="radio" name="connectionType" id="newConn" value="new" onclick="toggleSections()"> New Connection</label>
+      </div>
+      <div class="form-group">
+        <label>&nbsp;</label>
+        <label><input type="radio" name="connectionType" id="portingConn" value="porting" onclick="toggleSections()"> Porting</label>
+      </div>
+    </div>
+
+    <div id="newSection" class="section hidden">
+      <div class="form-group">
+        <label>Select Provider:</label>
+        <div class="radio-group" style="gap: 30px;">
+          <label><input type="radio" name="provider" value="Airtel"> Airtel</label>
+          <label><input type="radio" name="provider" value="VI"> VI</label>
+        </div>
+      </div>
+    </div>
+
+    <div id="portingSection" class="section hidden">
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label>Porting Type:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="portType" value="Personal to Corporate"> Personal ➝ Corporate</label>
+          <label><input type="radio" name="portType" value="Corporate to Personal"> Corporate ➝ Personal</label>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label>Port Code:</label>
+        <input type="text" name="portCode" placeholder="Enter port code">
+      </div>
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label>Mobile Number:</label>
+        <input type="tel" name="portMobileNumber" pattern="\d{10}" maxlength="10" placeholder="Enter mobile number">
+      </div>
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label>Port Validity:</label>
+        <div style="display: flex; gap: 10px;">
+          <input type="date" name="portValidityFrom" placeholder="From" /> <span>to</span>
+          <input type="date" name="portValidityTo" placeholder="To" />
+        </div>
+      </div>
+
+      <div class="dual-select">
+        <div class="form-group">
+          <label>From:</label>
+          <select name="portFromProvider" required>
+            <option value="">Select current provider</option>
+            <option value="Airtel">Airtel</option>
+            <option value="VI">VI</option>
+            <option value="Jio">Jio</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>To:</label>
+          <select name="portToProvider" required>
+            <option value="">Select new provider</option>
+            <option value="Airtel">Airtel</option>
+            <option value="VI">VI</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 15px;">
+        <p style="margin-left: 10px; color: #555; font-size: 14px;">
+          Send text message <strong>"PORT mobile number"</strong> to TRAI's Central Number <strong>1900</strong> for mobile number portability.
+          Example: <strong>'PORT 9876543211'</strong> to 1900
+        </p>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+    </div>
+
+    <div class="review-update-group" id="reviewUpdateGroup">
+      <button type="button">Review</button>
+      <button type="button">Update</button>
+    </div>
+  </form>
+
+  <div id="confirmationDetails">
+    <h3>Review Your Submission</h3>
+    <pre id="reviewData"></pre>
+    <div class="review-update-group">
+      <button onclick="goBackToForm(true)">Update</button>
+      <button onclick="confirmSubmission()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+    let formBackup = null;
+
+function toggleSections() {
+  const isNew = document.getElementById('newConn')?.checked;
+  const isPorting = document.getElementById('portingConn')?.checked;
+
+  const newSection = document.getElementById('newSection');
+  const portingSection = document.getElementById('portingSection');
+
+  // Show/hide sections
+  newSection?.classList.toggle('hidden', !isNew);
+  portingSection?.classList.toggle('hidden', !isPorting);
+
+  // Enable required attributes only on visible inputs/selects/textareas
+  if (newSection) {
+    newSection.querySelectorAll('input, select, textarea').forEach(el => {
+      if (isNew) el.setAttribute('required', 'required');
+      else el.removeAttribute('required');
+    });
+  }
+
+  if (portingSection) {
+    portingSection.querySelectorAll('input, select, textarea').forEach(el => {
+      if (isPorting) el.setAttribute('required', 'required');
+      else el.removeAttribute('required');
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("mobileForm").addEventListener("submit", handleFormSubmission);
+  // Initialize required attributes based on pre-selected radio (if any)
+  toggleSections();
+});
+
+function handleFormSubmission(event) {
+  event.preventDefault();
+  console.log("Submit clicked and handler called");
+
+  const form = document.getElementById('mobileForm');
+  const formData = new FormData(form);
+  const entries = {};
+
+  formData.forEach((value, key) => {
+    if (entries[key]) {
+      if (!Array.isArray(entries[key])) entries[key] = [entries[key]];
+      entries[key].push(value);
+    } else {
+      entries[key] = value;
+    }
+  });
+
+  formBackup = entries;
+
+  document.getElementById('mobileForm').style.display = 'none';
+  document.getElementById('confirmationDetails').style.display = 'block';
+  document.getElementById('reviewData').innerHTML = generateReviewHTML(entries);
+  document.querySelector('#confirmationDetails .review-update-group').style.display = 'flex';
+}
+
+function generateReviewHTML(data) {
+  let html = '<table style="width: 100%; border-collapse: collapse;">';
+  html += '<thead><tr><th style="text-align:left; padding: 8px; border-bottom: 2px solid #0072C6;">Field</th><th style="text-align:left; padding: 8px; border-bottom: 2px solid #0072C6;">Value</th></tr></thead><tbody>';
+
+  const fieldLabels = {
+    employeeName: 'Employee Name',
+    employeeId: 'Employee ID',
+    personId: 'Person ID',
+    userId: 'User ID',
+    dob: 'Date of Birth',
+    email: 'Email ID',
+    alternateMobile: 'Alternate Mobile Number',
+    aadhaarNumber: 'Aadhaar Number',
+    address: 'Address',
+    pincode: 'Pincode',
+    aadhaarUpload: 'Uploaded Aadhaar Card',
+    connectionType: 'Type of Request',
+    provider: 'Provider',
+    portType: 'Porting Type',
+    portCode: 'Port Code',
+    portMobileNumber: 'Mobile Number',
+    portValidityFrom: 'Port Validity From',
+    portValidityTo: 'Port Validity To',
+    portFromProvider: 'Port From Provider',
+    portToProvider: 'Port To Provider'
+  };
+
+  for (const key in data) {
+    if (!data.hasOwnProperty(key)) continue;
+
+    let displayKey = fieldLabels[key] || key;
+    let value = data[key];
+
+    if (value instanceof File) {
+      value = value.name;
+    }
+
+    if (Array.isArray(value)) {
+      value = value.join(', ');
+    }
+
+    if (key.toLowerCase().includes('date') || key.toLowerCase().includes('dob')) {
+      const dateObj = new Date(value);
+      if (!isNaN(dateObj)) {
+        value = dateObj.toLocaleDateString();
+      }
+    }
+
+    html += `<tr>
+      <td style="padding: 8px; border-bottom: 1px solid #ddd;">${displayKey}</td>
+      <td style="padding: 8px; border-bottom: 1px solid #ddd;">${value || '-'}</td>
+    </tr>`;
+  }
+
+  html += '</tbody></table>';
+  return html;
+}
+
+function goBackToForm(isUpdate = false) {
+  const form = document.getElementById('mobileForm');
+  for (const [key, value] of Object.entries(formBackup)) {
+    const field = form.elements[key];
+    if (!field) continue;
+
+    if (field.length && field[0].type === 'radio') {
+      for (const radio of field) {
+        radio.checked = (radio.value === value) || (Array.isArray(value) && value.includes(radio.value));
+      }
+    } else if (field.length && field[0].type === 'checkbox') {
+      for (const checkbox of field) {
+        checkbox.checked = Array.isArray(value) ? value.includes(checkbox.value) : value === checkbox.value;
+      }
+    } else if (field.type === 'file') {
+      // Do NOT set .value for file inputs, clear it instead (or leave as is)
+      field.value = '';
+    } else {
+      field.value = value;
+    }
+  }
+  toggleSections();
+  document.getElementById('mobileForm').style.display = 'block';
+  document.getElementById('confirmationDetails').style.display = 'none';
+}
+
+function confirmSubmission() {
+  alert("Your form has been successfully submitted. A copy will be sent to the private email.");
+}
+
+</script>
+
+</body>
+</html>
