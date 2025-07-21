@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mobile Connection Form</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: white;
+      color: #333;
+      padding: 20px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+      flex-direction: column;
+    }
+    .header img {
+      height: 120px;
+      width: 120px;
+      margin-bottom: 10px;
+    }
+    .header h2 {
+      font-size: 30px;
+      text-align: center;
+    }
+    .main-content {
+      flex-grow: 1;
+      padding: 20px;
+    }
+    .form-container {
+      max-width: 900px;
+      margin: auto;
+      background: #f4f4f4;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    .form-group {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    .form-group label {
+      white-space: nowrap;
+      margin-right: 10px;
+      font-weight: 600;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input[type="file"] {
+      padding: 5px;
+    }
+    .radio-group {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .section {
+      margin-top: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .button-group button,
+    .review-update-group button {
+      flex: 1;
+      margin: 0 5px;
+      padding: 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+    }
+    button[type="submit"] { background-color: #0072C6; }
+    button[type="submit"]:hover { background-color: #005A9E; }
+    button[type="reset"] { background-color: #00A1E4; }
+    button[type="reset"]:hover { background-color: #0086BE; }
+    .review-update-group {
+      display: none;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+    .review-update-group button:first-child {
+      background-color: #28a745;
+    }
+    .review-update-group button:last-child {
+      background-color: #ffc107;
+    }
+    .dual-select {
+      display: flex;
+      gap: 20px;
+      flex: 1;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+    .dual-select .form-group {
+      flex: 1;
+    }
+    @media (max-width: 768px) {
+      .form-row {
+        flex-direction: column;
+      }
+      .dual-select {
+        flex-direction: column;
+      }
+    }
+    #confirmationDetails {
+      display: none;
+      background: #e7f5ff;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div style="width:120px; height:120px; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#555; margin-bottom:10px;">
+    <img src="data:image/png;base64,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">
+  </div>
+  <h2>Mobile Connection Form</h2>
+</div>
+
+<div class="main-content">
+  <form id="mobileForm" class="form-container" novalidate>
+    <!-- Form fields here (same as your original, omitted for brevity) -->
+    <div class="form-row">
+      <div class="form-group"><label>Employee Name:</label><input type="text" name="employeeName" required></div>
+      <div class="form-group"><label>Employee ID:</label><input type="text" name="employeeId" pattern="\d{8}" maxlength="8" required></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Person ID:</label><input type="text" name="personId" pattern="\d{8}" maxlength="8" required></div>
+      <div class="form-group"><label>User ID:</label><input type="text" name="userId" required></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Date of Birth:</label><input type="date" name="dob" required></div>
+      <div class="form-group"><label>Email ID:</label><input type="email" name="email" required></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Alternate Mobile Number:</label><input type="tel" name="alternateMobile" pattern="\d{10}" maxlength="10" required></div>
+      <div class="form-group"><label>Aadhaar Number:</label><input type="text" name="aadhaarNumber" pattern="\d{12}" maxlength="12" required></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Address:</label><textarea name="address" rows="3" required></textarea></div>
+      <div class="form-group"><label>Pincode:</label><input type="text" name="pincode" pattern="\d{6}" maxlength="6" required></div>
+    </div>
+
+    <div class="form-group" style="margin-bottom: 20px;">
+      <label>Upload Aadhaar Card:</label>
+      <input type="file" name="aadhaarUpload" accept=".pdf,image/*" required>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Type of Request:</label>
+        <label><input type="radio" name="connectionType" id="newConn" value="new" onclick="toggleSections()"> New Connection</label>
+      </div>
+      <div class="form-group">
+        <label>&nbsp;</label>
+        <label><input type="radio" name="connectionType" id="portingConn" value="porting" onclick="toggleSections()"> Porting</label>
+      </div>
+    </div>
+
+    <div id="newSection" class="section hidden">
+      <div class="form-group">
+        <label>Select Provider:</label>
+        <div class="radio-group" style="gap: 30px;">
+          <label><input type="radio" name="provider" value="Airtel"> Airtel</label>
+          <label><input type="radio" name="provider" value="VI"> VI</label>
+        </div>
+      </div>
+    </div>
+
+    <div id="portingSection" class="section hidden">
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label>Porting Type:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="portType" value="Personal to Corporate"> Personal ➝ Corporate</label>
+          <label><input type="radio" name="portType" value="Corporate to Personal"> Corporate ➝ Personal</label>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label>Port Code:</label>
+        <input type="text" name="portCode" placeholder="Enter port code">
+      </div>
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label>Mobile Number:</label>
+        <input type="tel" name="portMobileNumber" pattern="\d{10}" maxlength="10" placeholder="Enter mobile number">
+      </div>
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label>Port Validity:</label>
+        <div style="display: flex; gap: 10px;">
+          <input type="date" name="portValidityFrom" placeholder="From" /> <span>to</span>
+          <input type="date" name="portValidityTo" placeholder="To" />
+        </div>
+      </div>
+
+      <div class="dual-select">
+        <div class="form-group">
+          <label>From:</label>
+          <select name="portFromProvider" required>
+            <option value="">Select current provider</option>
+            <option value="Airtel">Airtel</option>
+            <option value="VI">VI</option>
+            <option value="Jio">Jio</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>To:</label>
+          <select name="portToProvider" required>
+            <option value="">Select new provider</option>
+            <option value="Airtel">Airtel</option>
+            <option value="VI">VI</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 15px;">
+        <p style="margin-left: 10px; color: #555; font-size: 14px;">
+          Send text message <strong>"PORT mobile number"</strong> to TRAI's Central Number <strong>1900</strong> for mobile number portability.<br>
+          Example: <strong>'PORT 9876543211'</strong> to 1900
+        </p>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+    </div>
+  </form>
+
+  <div id="confirmationDetails">
+    <h3>Review Your Submission</h3>
+    <div id="reviewData"></div>
+    <div class="review-update-group" style="display: flex; justify-content: space-between; margin-top: 15px;">
+      <button onclick="goBackToForm()">Update</button>
+      <button onclick="confirmSubmission()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let formBackup = null;
+
+  // Show/hide sections based on connection type radio buttons
+  function toggleSections() {
+    const isNew = document.getElementById('newConn')?.checked;
+    const isPorting = document.getElementById('portingConn')?.checked;
+
+    const newSection = document.getElementById('newSection');
+    const portingSection = document.getElementById('portingSection');
+
+    newSection?.classList.toggle('hidden', !isNew);
+    portingSection?.classList.toggle('hidden', !isPorting);
+
+    // Add/remove required attribute accordingly
+    if (newSection) {
+      newSection.querySelectorAll('input, select, textarea').forEach(el => {
+        if (isNew) el.setAttribute('required', 'required');
+        else el.removeAttribute('required');
+      });
+    }
+    if (portingSection) {
+      portingSection.querySelectorAll('input, select, textarea').forEach(el => {
+        if (isPorting) el.setAttribute('required', 'required');
+        else el.removeAttribute('required');
+      });
+    }
+  }
+
+  // On DOM load, initialize event listeners and UI state
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("mobileForm").addEventListener("submit", handleFormSubmission);
+    toggleSections();
+  });
+
+  // Handle initial form submission - validate and show confirmation
+  function handleFormSubmission(event) {
+    event.preventDefault();
+
+    const form = document.getElementById('mobileForm');
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const formData = new FormData(form);
+
+    // Convert FormData to plain object, note: files are not included here for confirmation display
+    const entries = {};
+    formData.forEach((value, key) => {
+      // For files, show filename instead of file object
+      if (value instanceof File && value.name) {
+        entries[key] = value.name;
+      } else {
+        if (entries[key]) {
+          if (!Array.isArray(entries[key])) entries[key] = [entries[key]];
+          entries[key].push(value);
+        } else {
+          entries[key] = value;
+        }
+      }
+    });
+
+    formBackup = entries;
+
+    form.style.display = 'none';
+    document.getElementById('confirmationDetails').style.display = 'block';
+    document.getElementById('reviewData').innerHTML = generateReviewHTML(entries);
+  }
+
+  // Generate HTML for confirmation table
+  function generateReviewHTML(data) {
+    let html = '<table style="width: 100%; border-collapse: collapse;">';
+    html += '<thead><tr><th style="text-align:left; padding: 8px; border-bottom: 2px solid #0072C6;">Field</th><th style="text-align:left; padding: 8px; border-bottom: 2px solid #0072C6;">Value</th></tr></thead><tbody>';
+
+    const fieldLabels = {
+      employeeName: 'Employee Name',
+      employeeId: 'Employee ID',
+      personId: 'Person ID',
+      userId: 'User ID',
+      dob: 'Date of Birth',
+      email: 'Email ID',
+      alternateMobile: 'Alternate Mobile Number',
+      aadhaarNumber: 'Aadhaar Number',
+      address: 'Address',
+      pincode: 'Pincode',
+      aadhaarUpload: 'Uploaded Aadhaar Card',
+      connectionType: 'Type of Request',
+      provider: 'Provider',
+      portType: 'Porting Type',
+      portCode: 'Port Code',
+      portMobileNumber: 'Mobile Number',
+      portValidityFrom: 'Port Validity From',
+      portValidityTo: 'Port Validity To',
+      portFromProvider: 'Port From Provider',
+      portToProvider: 'Port To Provider'
+    };
+
+    for (const key in data) {
+      if (!data.hasOwnProperty(key)) continue;
+
+      const displayKey = fieldLabels[key] || key;
+      let value = data[key];
+
+      if (Array.isArray(value)) {
+        value = value.join(', ');
+      }
+
+      // Format dates nicely
+      if (key.toLowerCase().includes('date') || key.toLowerCase().includes('dob')) {
+        const dateObj = new Date(value);
+        if (!isNaN(dateObj)) {
+          value = dateObj.toLocaleDateString();
+        }
+      }
+
+      html += `<tr>
+        <td style="padding: 8px; border-bottom: 1px solid #ddd;">${displayKey}</td>
+        <td style="padding: 8px; border-bottom: 1px solid #ddd;">${value || '-'}</td>
+      </tr>`;
+    }
+
+    html += '</tbody></table>';
+    return html;
+  }
+
+  // Return to form to allow editing submission
+  function goBackToForm() {
+    if (!formBackup) return;
+
+    const form = document.getElementById('mobileForm');
+
+    for (const [key, value] of Object.entries(formBackup)) {
+      const field = form.elements[key];
+      if (!field) continue;
+
+      if (field.length && field[0].type === 'radio') {
+        for (const radio of field) {
+          radio.checked = (radio.value === value) || (Array.isArray(value) && value.includes(radio.value));
+        }
+      } else if (field.length && field[0].type === 'checkbox') {
+        for (const checkbox of field) {
+          checkbox.checked = Array.isArray(value) ? value.includes(checkbox.value) : value === checkbox.value;
+        }
+      } else if (field.type === 'file') {
+        field.value = ''; // Can't prefill file inputs
+      } else {
+        field.value = value;
+      }
+    }
+
+    toggleSections();
+    form.style.display = 'block';
+    document.getElementById('confirmationDetails').style.display = 'none';
+  }
+
+  // Final confirmation and actual form data submit (with file support)
+  async function confirmSubmission() {
+    if (!formBackup) return;
+
+    const form = document.getElementById('mobileForm');
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('http://localhost:3000/submit', {
+        method: 'POST',
+        body: formData, // Send as multipart/form-data to include files
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Network response was not ok');
+      }
+
+      const result = await response.json();
+
+      alert(result.message || "Your form has been successfully submitted. A copy will be sent to the private email.");
+
+      form.reset();
+      form.style.display = 'block';
+      document.getElementById('confirmationDetails').style.display = 'none';
+      formBackup = null;
+    } catch (error) {
+      console.error('Submit error:', error);
+      alert('Failed to submit form. Please try again later.');
+    }
+  }
+</script>
+
+</body>
+</html>
